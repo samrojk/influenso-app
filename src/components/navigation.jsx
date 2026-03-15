@@ -3,7 +3,7 @@ import { FiCompass, FiHeart, FiPlus, FiBell, FiUser } from "react-icons/fi";
 
 const Navigation = () => {
   return (
-    <div className="fixed bottom-8 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-lg px-4 sm:px-6">
+    <div className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-lg px-4 sm:px-6">
       <div
         className="relative flex items-center justify-between
         bg-gray-50/85 backdrop-blur-2xl
