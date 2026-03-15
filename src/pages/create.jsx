@@ -3,7 +3,7 @@ import { IoAlertCircle } from "react-icons/io5";
 
 const Create = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="h-full flex items-center justify-center p-6">
       <div className="flex gap-2 text-amber-500 items-center">
         <IoAlertCircle size={24} />
         <h1 className="font-semibold font-secondary text-lg">

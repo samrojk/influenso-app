@@ -1,9 +1,4 @@
-import {
-  motion,
-  AnimatePresence,
-  useMotionValue,
-  useSpring,
-} from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { FaCheck } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
@@ -11,37 +6,18 @@ import { IoLocationSharp } from "react-icons/io5";
 const PopUp = ({ isOpen, onClose, profile }) => {
   const [sent, setSent] = useState(false);
 
-  const rawY = useMotionValue(0);
-
-  const y = useSpring(rawY, {
-    stiffness: 300,
-    damping: 30,
-    mass: 0.7,
-  });
-
   useEffect(() => {
     if (!isOpen) {
       setSent(false);
-      rawY.set(0);
     }
   }, [isOpen]);
 
   if (!profile) return null;
 
-  const closeSheet = () => {
-    // FAST OUT animation
-    rawY.set(window.innerHeight);
-    setTimeout(() => {
-      onClose();
-      rawY.set(0);
-    }, 180); // fast industry-grade close
-  };
-
   const handleDragEnd = (_, info) => {
-    if (info.offset.y > 120 || info.velocity.y > 900) {
-      closeSheet();
-    } else {
-      rawY.set(0);
+    // Close if dragged down sufficiently or swiped fast
+    if (info.offset.y > 100 || info.velocity.y > 400) {
+      onClose();
     }
   };
 
@@ -51,35 +27,34 @@ const PopUp = ({ isOpen, onClose, profile }) => {
         <>
           {/* BACKDROP */}
           <motion.div
-            className="fixed inset-0 bg-black/30 backdrop-blur-md z-60"
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-60"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={closeSheet}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            onClick={onClose}
           />
 
           {/* SHEET */}
           <motion.div
             drag="y"
-            dragConstraints={{ top: 0 }}
-            dragElastic={0.25}
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={{ top: 0.05, bottom: 1 }}
             onDragEnd={handleDragEnd}
-            style={{ y }}
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{
               type: "spring",
-              stiffness: 300,
-              damping: 30,
-              mass: 0.7,
+              stiffness: 400,
+              damping: 32,
+              mass: 0.8,
             }}
             className="fixed bottom-0 left-0 right-0 z-70
             h-[85vh]
             bg-white
-            rounded-t-[28px]
-            shadow-2xl
+            rounded-t-[32px]
+            shadow-[0_-8px_30px_rgba(0,0,0,0.12)]
             flex flex-col"
           >
             {/* SCROLLABLE CONTENT */}
