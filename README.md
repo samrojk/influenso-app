@@ -132,4 +132,4 @@ MIT License © 2026 Influenso
 
 ---
 
-Built with ❤️ using React + Vite
+Built with ❤️ using React
